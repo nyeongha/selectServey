@@ -31,16 +31,22 @@
         $('#tg').click(async function () {
             window.location.replace("create.html")
         })
+        $('#posting').empty()
 
         let docs = await getDocs(collection(db, "servey"));
-        $('#posting').empty();
         docs.forEach((doc) => {
+            
+            
             let post = doc.data();
+            let id=doc['_key']['path']['segments'][6];
+            
+
+            
             $('#posting').append(
                 `
                 <div class="col">
                 <div class="card h-100">
-                    <div class="card-body">
+                    <div class="card-body" id="${id}">
                     <h5 class="card-title">${post["title"]}</h5>
                     <p class="card-text">${post["content"]}</p>
                     </div>
@@ -48,6 +54,19 @@
                 </div>
                 `)
         });
+
+        $('.card-body').click(async function(){
+            let id=$('.card-body').attr('id')
+            console.log(id)
+            window.location.replace("post.html"+"?id="+id);
+
+        });
+        
+        $('posting').empty();
+
+
+
+        
 
     </script>
     <meta charset="UTF-8">
@@ -102,8 +121,9 @@
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4" id="posting">
+
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-100" id="1">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
@@ -111,16 +131,18 @@
                 </div>
             </div>
         </div>
+
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-100"  id="2">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">This is a short card.</p>
                 </div>
             </div>
         </div>
+
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-100" id="3">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
@@ -128,8 +150,9 @@
                 </div>
             </div>
         </div>
+
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-100" id="3">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
