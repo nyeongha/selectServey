@@ -33,6 +33,14 @@
         import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
         import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import {doc,deleteDoc} from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        
+
+        $('#home').click(async function(){
+            window.location.href="index.html"
+        })
+
+        
 
 
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -56,14 +64,25 @@
 
         const urlParams = new URL(location.href).searchParams;
         const id = urlParams.get('id');
-        console.log(id)
+
+
+        
+        $('#delete').click(async function(){
+            $('#'+id).remove();
+            deleteDoc(doc(db, "servey",id));
+            
+            alert("삭제되었습니다.");
+            window.location.replace("index.html")
+            
+        })
+        
 
         docs.forEach((doc) => {
             let post = doc.data()
             
 
             if (id == doc['_key']['path']['segments'][6]) {
-                console.log(doc['_key']['path']['segments'][6])
+                
 
                 $('.posting').append(
                     `
@@ -97,7 +116,7 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                    <li><a href="index.html" class="nav-link px-2 text-secondary">Home</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
                     <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
@@ -120,6 +139,10 @@
     <div class="posting">
 
     </div>
+    <button type="button" class="btn btn-dark" id="home">뒤로가기</button>
+    <button type="button" class="btn btn-dark" id="delete">삭제</button>
+
+
 </body>
 
 </html>
